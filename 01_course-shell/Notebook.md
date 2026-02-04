@@ -249,7 +249,10 @@ meow@MyPC:/bin$
 [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=3228)
 
 ## In the end 
-Please read notes for more information. [![][MS_ICON_SMALL]](https://missing.csail.mit.edu/2026/course-shell/)
+Please read notes for more information. [![][MS_ICON_SMALL]](https://missing.csail.mit.edu/2026/course-shell/)  
+  #### Things not covered in video:   
+  - `set`
+  - Exercises
 
 
 
