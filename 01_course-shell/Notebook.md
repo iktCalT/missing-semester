@@ -24,14 +24,14 @@ PowerShell is good, but it uses different syntax. This course will focus entirel
 `DIR`: current directory  
 `$`: you are not admin user  
 
-eg. Prompt at my WSL home directory: `meow@MyPC:~$`
+e.g. Prompt at my WSL home directory: `meow@MyPC:~$`
 
 ## Execute
 Followed by prompt, you can type a program name to run it.  
-eg. `meow@MyPC:~$ date`
+e.g. `meow@MyPC:~$ date`
 
 We can also run a program with arguments (separated by white spaces).  
-eg.   
+e.g.   
   `echo Hello      World` (two args) -> 
   ```bash
   meow@MyPC:~$ echo Hello      World
@@ -58,7 +58,7 @@ eg.
 
 ## Manual 
 `man` (means manual) is a useful program. By default, it uses a text reader (read-only) called `less`.  
-eg. `man echo`, `man bash`, `man gcc`, `man python`, `man less`, `man nethack`  
+e.g. `man echo`, `man bash`, `man gcc`, `man python`, `man less`, `man nethack`  
 
 Some projects have no manual pages. For example vscode (`man code` / `man vscode` -> No manual entry for code / vscode)  
 Instead, they support `--help` or `-h`. `code --help`  
@@ -88,13 +88,13 @@ meow@MyPC:/bin$
   If `[FILE]` is not provided, it will be current directory by default.  
   Options—see `ls --help` or `man ls`.  
 - `cat`: print out the contents of a file.  
-  eg. `meow@MyPC:~$ cat ~/.bashrc`  
+  e.g. `meow@MyPC:~$ cat ~/.bashrc`  
 - `sort`, `uniq`, `head`, `tail`: read files in specific behavior. [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2012)  
   #### Useful combination:  
   `man python | head -n20`: print first 20 line of python's manual;  
   `man python | grep -A 5 "DESCRIPTION"`: Show the word "DESCRIPTION" and the 5 lines after it.  
 - `grep`: a file searcher. Search for thing match particular pattern **in a file**.   
-  eg. `grep PATH= ~/.bashrc`: find all lines with string "PATH=" in `.bashrc`.  
+  e.g. `grep PATH= ~/.bashrc`: find all lines with string "PATH=" in `.bashrc`.  
   `grep -r PATTERNS [FILE]`: `[FILE]` here is a folder. Find lines in all files under that folder ([FILE]) recursively.  
   `grep` is very powerful because it supports **REGULAR EXPRESSION (regex)**.
 - `sed`: is used to modify files. [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2264)
@@ -156,7 +156,7 @@ meow@MyPC:/bin$
   not equal
   ```
 - Sleep:  
-  eg. `sleep 10`
+  e.g. `sleep 10`
 - You can store commands in a `*.sh` file.
   [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=4119)  
   If a line starts with `#!/FILE` (called **shebang** line), it means: give the contents of this program to that `FILE`.
@@ -233,7 +233,7 @@ meow@MyPC:/bin$
   If a program represents in multiple paths, it will run the first one it encounters.  
 
   You can use `which {-a|--all} FILENAME` to list all programs with `FILENAME`  
-  eg. I have two copies of python 
+  e.g. I have two copies of python 
   ```bash
   meow@MyPC:~$ which -a python3
   /usr/bin/python3
