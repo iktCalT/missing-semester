@@ -1,9 +1,11 @@
 # The Missing Semester 2026
 My personal notebook for learning MIT's **The Missing Semester of Your CS Education**  
-**Credits:** MIT staff
+**Credits:** Anish, Jon, Jose, MIT Course Staff, and all who ask questions.
 
 ## Course Information
 **Website:** [missing.csail.mit.edu](https://missing.csail.mit.edu/)
+
+**GitHub:** [missing-semester](https://github.com/missing-semester/missing-semester)
 
 **Playlist:** [YouTube Playlist](https://youtube.com/playlist?list=PLyzOVJj3bHQunmnnTXrNbZnBaCA-ieK4L)
 
