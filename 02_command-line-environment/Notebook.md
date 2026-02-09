@@ -1,0 +1,236 @@
+# Lecture 2: Command-line Environment
+Part I: [The Command Line Interface](#the-command-line-interface)  
+Part II: [Remote Machines](#remote-machines)
+
+
+# The Command Line Interface
+We will discuss concepts in this example: 
+```bash
+#!/usr/bin/env bash
+if [[ -f $1 ]]; then
+    echo "Target file already exists"
+    exit 1
+else
+    if $DEBUG; then
+        grep 'error' - | tee $1
+    else
+        grep 'error' - > $1
+    fi
+    exit 0
+fi
+```
+
+- Arguments
+- Streams
+- Environment variables
+- Return codes
+- Signals
+
+## Arguments
+For example, in command `ls -l FOLDER/`, the program is `ls`, and its arguments are `-l` and `FOLDER/`.  
+Most programming languages have a way to get their arguments. e.g. in Python  
+```python
+# arguments.py
+import sys
+if __name__ == "__main__":
+  print(sys.argv)
+```
+Then use the following command below, we can see the arguments:  
+```bash
+meow@MyPC:~$ python arguments.py -abcd xyz
+['arguments.py', '-abcd', 'xyz']
+```
+
+  ### Flags
+  Usually, arguments are mixture of *flags* and regular string. Flags are strings starts with `-` or `--`. Flags will change the program's behaviors.   
+  By convention, single dash `-` is followed by one letter (`-a`, `-l`, `-h`), double dash is followed by letters (`--all`, `--help`, `--version`)  
+  You can use multiple flags in one command. e.g. `ls -a -l`  
+  And usually, the single character flags can combine. `ls -a -l` is equivalent to `ls -al`. And the order usually doesn't matter. So `ls -la` is equivalent to `ls -al`.    
+
+  Please note that **these features are not provided by shell**. They are implemented in each program. It depends on the program how to parse and handle these arguments (flags and regular strings).   
+  But there are some libraries to help programmers parse these arguments.   
+
+  ### Multiple arguments with same type
+  Usually, CLI programs can accept multiple arguments with same type. 
+  If you check `mkdir`'s help page. You'll find `DIRECTORY...`, which means `mkdir` can create multiple at the same time.  
+  ```bash
+  mkdir --help
+  Usage: mkdir [OPTION]... DIRECTORY...
+  ```  
+  Instead of using `mkdir src` followed by `mkdir bin`, you can use `mkdir src bin` to create two folders directly.  
+  With this feature, programs can use glob to match pattern. `*` matches all strings, `**` (only supported by some shells, e.g. `zsh`) matches all nested folders.   
+  For example, `touch test/{a,b,c}.py` is equivalent to `touch test/a.py test/b.py test/c.py`; `ls {.,/}` is equivalent to `ls . /` (list all files in home`~` and root`/`); `ls /lib*` is equivalent to `ls /lib /lib32 /lib64 /lib.usr-is-merged /libx32`   
+
+## Streams
+When we are using pipeline like 
+`cat numbers.txt | grep -P '^\d$' | sort | uniq -c`  
+We are **NOT** running those programs one by one. But we are running all of them at the same time. We just connect the standard output of previous command to the standard input of the next command.  
+Here is a good example [![][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).  
+
+  ### Standard input and output  
+  In `grep "hello" -`, `-` is not a flag, it tells `grep` to read from standard input.  
+  There is one standard input and two standard output: **standard output stream** and **standard error stream**. 
+  ```bash
+  # If succeeded(1), goes into output.txt (>output.txt is equivalent to 1>output.txt)
+  meow@MyPC:~$ ls Downloads >output.txt 2>err.txt
+  meow@MyPC:~$ cat output.txt
+  datalab-handout.tar
+  meow@MyPC:~$ cat err.txt
+
+  # If failed(2), goes into err.txt
+  meow@MyPC:~$ ls nonexistance >output.txt 2>err.txt
+  meow@MyPC:~$ cat output.txt
+  meow@MyPC:~$ cat err.txt
+  ls: cannot access 'nonexistance': No such file or directory
+  ```
+
+## Environment variables
+  ### Shell Variables - direct assign
+  To assign an environment variable: `foo=bar`  
+  To access that variable: `echo $foo`  
+  ```bash
+  meow@MyPC:~$ foo=bar
+  meow@MyPC:~$ echo $foo
+  bar
+  ```
+  Please note that `foo = bar` is invalid. It will regard `foo` as a program.  
+  We can also assign a command to an environment variable:  
+  ```bash
+  meow@MyPC:~$ foo=$(ls -a)
+  meow@MyPC:~$ echo $foo
+  . .. .android android .atuin .aws .azure #...
+  ```  
+
+  \[**Note**\]: Assigning environment variable in the way above only affects the current shell. It is invisible to other session and even to its scripts or programs.   
+  ```bash
+  meow@MyPC:~$ DEBUG=1
+  meow@MyPC:~$ bash -c 'echo $DEBUG'  # Run the cmd in a child process (and nothing returns)
+
+  meow@MyPC:~$ DEBUG=2 bash -c 'echo $DEBUG'  # To pass it to the process, we need to bind the assignment and the command 
+  2
+  meow@MyPC:~$ echo $DEBUG  # And it won't change $DEBUG outside
+  1
+  ```
+  Another example:  
+  ```bash
+  meow@MyPC:~$ TZ=Asia/Tokyo date  # Change the time zone to Tokay then call date
+  Fri Feb  6 05:49:40 PM JST 2026
+  ```  
+
+  ### Environment variables - export
+  Another way is to use `export`. `export DEBUG=1` will make sure the current shell and its child processes can see the change.  
+  ```bash
+  meow@MyPC:~$ export foo=bar
+  meow@MyPC:~$ bash -c "echo $foo"  # The child process can see foo now
+  bar
+  meow@MyPC:~$ foo=baz
+  meow@MyPC:~$ echo $foo
+  baz
+  meow@MyPC:~$ bash -c "echo $foo"  # Note that even if I want to change it only in this shell, its child processes can also see the change
+  baz
+  ```  
+  The example above seems tell us that: If we just say `foo=bar`, shell places `foo` in its private storage. If we say `export foo=bar`, shell places `foo` in a shared storage, so that its child processes can access it. ***But it's inaccurate!***  
+  ```bash
+  meow@MyPC:~$ unset foo  # delete foo
+  meow@MyPC:~$ export foo=bar
+  meow@MyPC:~$ bash -c "echo $foo"
+  bar
+  meow@MyPC:~$ bash -c "foo=baz"
+  meow@MyPC:~$ bash -c "echo $foo"
+  bar
+  meow@MyPC:~$ echo $foo  # child processes cannot change the variable outside
+  bar
+  ```   
+  See, child processes cannot modify the `foo` in its parent, which means that there are two copies of `foo`. So, actually, when we type in `export foo=bar`, it will pass a **copy** of `foo` to every child process.  
+
+  Please note that:
+  ```bash
+  meow@MyPC:~$ bash -c 'foo=baz; echo $foo'  # as expected, child can change its copy
+  baz
+  meow@MyPC:~$ bash -c "foo=baz; echo $foo"  # if we use double quotes, it will print the value in parent shell
+  bar
+  ```  
+  Why is that? I checked the differences between single and double quotes [![][GNU_ICON]](https://www.gnu.org/software/bash/manual/bash.html#Quoting). 
+  - In double-quote cases, parent shell will replace `$foo` with the `$foo` in itself (which is `bar`) before `"foo=baz; echo $foo"` is transferred to the child shell. So, what the child shell see is `foo=baz; echo bar`. Because *The characters `$` and `` ` `` retain their special meaning within double quotes*. 
+  - However, in single-quote cases, *single quotes (`'`) preserves the literal value of each character within the quotes*. So parent shell will pass `'foo=baz; echo $foo'` to its child shell. So, what the child shell see is `foo=baz; echo $foo`. 
+  
+
+  ### Permanent environment variables - write in shell config file
+  The only way to set permanent environment variables is writing `export foo=bar` in **shell configuration file** (`~/.bashrc`, `~/.zshrc`, ...)  
+  In my understanding, there is no actual "permanent" environment variable in Linux (except for those in `/etc/environment`). It seem permanent because we assign a value to it (with `~/.bashrc` or other scripts) when we create a new session.
+
+  ### Remove a shell/environment variable
+  Use `unset foo`.
+
+## Return codes
+Use `echo $?` to check the return code of previous command.
+
+## Signals
+- When we press `Ctrl-C`, it shell will deliver a `SIGINT` (signal #2, means "interrupt") to the current process. Each program can define how to handle signals(In most cases).  
+For example: 
+  ```python
+  #!/usr/bin/env python
+
+  # This python program will not stop even if we press Ctrl-C
+  import signal, time
+
+  def handler(signum, time):
+      print("\nI got a SIGINT, but I am not stopping")
+
+  signal.signal(signal.SIGINT, handler)
+  i = 0
+  while True:
+      time.sleep(.1)
+      print("\r{}".format(i), end="")
+      i += 1
+  ```
+- `Ctrl-\`: sends `SIGQUIT` (#3) to current process, which is more aggressive than `SIGINT`.
+- `Ctrl-Z`: suspend the process. To check it, use `jobs`. To recover it, use `fg` (foreground).   
+- `kill`: Send signal to specific process. See [Tips-kill](#tips-kill). Use `kill -l` to check all signals. 
+
+Commonly used signals (summarized by Gemini, converted on [tabletomarkdown](https://tabletomarkdown.com/)):   
+  | **#** | **Name** | **Action** | **Description** |
+  | --- | --- | --- | --- |
+  | **1** | **SIGHUP** | Terminate / Restart | **Hangup:** Used to tell a background process (daemon) to reload its configuration files without a full restart. |
+  | **2** | **SIGINT** | Terminate | **Interrupt:** Triggered by `Ctrl+C`. Gracefully stops a process; often caught to perform cleanup. |
+  | **3** | **SIGQUIT** | Terminate + Core | **Quit:** Triggered by `Ctrl+\`. Like SIGINT, but creates a "core dump" file for deep debugging. |
+  | **9** | **SIGKILL** | Terminate (Forced) | **Kill:** Immediate exit. The process cannot catch or ignore this. Use only when a process is "stuck" or unresponsive. |
+  | **10/12** | **SIGUSR1/2** | Terminate (Default) | **User Defined:** Custom triggers for your code (e.g., toggling debug logs or clearing internal caches). |
+  | **11** | **SIGSEGV** | Terminate + Core | **Segfault:** The program tried to access restricted memory. Indicates a bug in memory management/pointers. |
+  | **13** | **SIGPIPE** | Terminate | **Broken Pipe:** Sent when a program writes to a pipe that has no reader. Common in CLI tool chains. |
+  | **15** | **SIGTERM** | Terminate | **Software Termination:** The "polite" kill. Standard for orchestrators (like Kubernetes) to request a shutdown. |
+  | **17** | **SIGCHLD** | Ignore (Default) | **Child Status:** Notifies parent when a child process finishes. Must be handled to avoid "Zombie" processes. |
+  | **18** | **SIGCONT** | **Resume** | **Continue:** Tells a process previously stopped by SIGSTOP/SIGTSTP to resume execution in the background. |
+  | **19/20** | **SIGSTOP/TSTP** | Stop (Pause) | **Stop:** Pauses the process. SIGTSTP is sent by `Ctrl+Z`; SIGSTOP is a forced pause that cannot be ignored. |
+
+Manual of all standard signals [![][GNU_ICON]](https://sourceware.org/glibc/manual/latest/html_node/Standard-Signals.html).
+
+## Tips
+- `ps`: Information about running processes  
+- `&&`: The right program will run only if the left one runs successfully. 
+- `||`: The right program will run only if the left one fails.  
+- `grep -q`: It is equivalent to `grep -quiet`, don't print the output on screen.  
+- `jobs`: Show information about processes spawned by the current shell. For example: 
+  ```bash
+  jobs -l  # List jobs with process IDs
+  [1]- 24336 Stopped          sleep 30
+  [2]+ 24409 Stopped          sleep 60
+  # Where 1 and 2 are job_ids, 
+  # 24336 and 24409 are process_ids
+  ```
+- `fg`: Bring most recently **suspended** or **running background** job to foreground. `fg %job_id` (e.g. `fg $2`): Bring a specific job to foreground.  
+- `top`: display Linux processes.  
+- <span id="tips-kill"></span>`kill`: can send any signal to a process. You can use this syntax—`kill [-s sigspec | -n signum | -sigspec] process_id | %job_id ...`. If no signal is provided, it will be `SIGTERM` by default.    
+  ```bash
+  # To continue previous jobs, use
+  kill -SIGCONT 24336 24409
+  # or
+  kill -SIGCONT %1 %2
+  #or 
+  kill -n 18 %1 %2
+  # SIGCONT (#18): continue
+  ```
+
+
+[GNU_ICON]: https://img.shields.io/badge/-GNU-white?style=flat&logo=gnu&logoColor=black
+[YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
