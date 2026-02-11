@@ -1,4 +1,4 @@
-# Lecture 1: Course Overview + Introduction to the Shell [![][MS_ICON_MIDDLE]](https://missing.csail.mit.edu/2026/course-shell/)
+# Lecture 1: Course Overview + Introduction to the Shell [![][MS_ICON_M]](https://missing.csail.mit.edu/2026/course-shell/)
 
 
 ## Introduction to shell
@@ -13,8 +13,10 @@ For windows, they are batch (older) and PowerShell (newer).
 PowerShell is good, but it uses different syntax. This course will focus entirely on bash.
 
 ## Why shell
-- In the shell, you can automate tasks.  
+- In the shell, you can automate tasks. 
+   
 - It can combine programs. (pipeline)  
+  
 - Knowing it helps you interact with open-source community as well as work in a company.
 
 ## Prompt
@@ -60,7 +62,7 @@ e.g.
 `man` (means manual) is a useful program. By default, it uses a text reader (read-only) called `less`.  
 e.g. `man echo`, `man bash`, `man gcc`, `man python`, `man less`, `man nethack`  
 
-Some projects have no manual pages. For example vscode (`man code` / `man vscode` -> No manual entry for code / vscode)  
+Some projects have no manual pages. For example, vscode (`man code` / `man vscode` -> No manual entry for code / vscode)  
 Instead, they support `--help` or `-h`. `code --help`  
 
 `nethack` have manual page but doesn't support `--help` (or `-h` for short).
@@ -68,7 +70,7 @@ Instead, they support `--help` or `-h`. `code --help`
 Some even doesn't support `--help` (`asciiquarium`).  
 
 ## Relative path & absolute path
-*Relative paths are any path that does not start with a slash.* (or tilde? I guess)  
+*Relative paths are any path that does not start with a slash.* (or tilde `~`? I guess)  
 
 `cd bin` is equivalent to `cd ./bin`  
 `cd` is equivalent to `cd ~`, `~` is home directory, its absolute path is `/home/username`   
@@ -83,21 +85,28 @@ meow@MyPC:/bin$
 
 ## Useful commands 
 - `cd`: change directory. Options—see `cd --help`  
+  
 - `clear`: clear the terminal screen (not `clean`—the one I've always mistaken for)  
+  
 - `ls [OPTION]... [FILE]...`: list (ls) all files and folders under `[FILE]` (file or directory). 
   If `[FILE]` is not provided, it will be current directory by default.  
   Options—see `ls --help` or `man ls`.  
+  
 - `cat`: print out the contents of a file.  
   e.g. `meow@MyPC:~$ cat ~/.bashrc`  
+
 - `sort`, `uniq`, `head`, `tail`: read files in specific behavior. [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2012)  
   #### Useful combination:  
   `man python | head -n20`: print first 20 line of python's manual;  
   `man python | grep -A 5 "DESCRIPTION"`: Show the word "DESCRIPTION" and the 5 lines after it.  
+
 - `grep`: a file searcher. Search for thing match particular pattern **in a file**.   
   e.g. `grep PATH= ~/.bashrc`: find all lines with string "PATH=" in `.bashrc`.  
   `grep -r PATTERNS [FILE]`: `[FILE]` here is a folder. Find lines in all files under that folder ([FILE]) recursively.  
   `grep` is very powerful because it supports **REGULAR EXPRESSION (regex)**.
+
 - `sed`: is used to modify files. [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2264)
+  
 - `find`: used to find file.   
   ```bash
   meow@MyPC:~$ find ~/Downloads -type f -name "*.tar" # -type {f | d}: file or directory
@@ -108,14 +117,19 @@ meow@MyPC:/bin$
   meow@MyPC:~$ find ~/Downloads -type f -size -10M -exec cp {} {} \;
   cp: '/home/meow/Downloads/datalab-handout.tar' and '/home/meow/Downloads/datalab-handout.tar' are the same file
   ```  
-  \[Note\]: `find` is recursive by default. You can use option `-maxdepth` to control its searching depth.  
+  \[Note\]: `find` is recursive by default. You can use option `-maxdepth` to control its searching depth. 
+
 - `awk`: used to parse files. By default, it will split a file by white spaces and lines breaks.  
+  
 - `ssh`: run a command on a remote machine.  
+  
 - `chmod`: change file mode—read(r), write(w), execute(x), ...
 
 ## Bash language
 - `|` (pipe character): Take the output of left program as the input of right program.  
-- `>` and `<`: write to (overwrite - delete old data and write) and read from a file. `>>` append to the end of a file. For example: `date > thedate.txt`   
+  
+- `>` and `<`: write to (overwrite - delete old data and write) and read from a file. `>>` append to the end of a file. For example: `date > thedate.txt`  
+  
 - Bash supports  
   - Conditional expression: 
     ```bash
@@ -135,6 +149,7 @@ meow@MyPC:/bin$
     ```bash
     while CONDITION; do EXPRESSION_1; EXPRESSION_2; ...; done
     ```
+
   - For loop:  
     ```bash
     meow@MyPC:~$ for var in Hello , World \!; do echo "$var"; done
@@ -143,11 +158,13 @@ meow@MyPC:/bin$
     World
     !
     ```
+
 - `"$(prog)"`: program; `"$var"`: variable
   ```bash
   for var in $(seq 1 2 10); do echo "$var"1; done # seq 1 2 10: sequence of 1 to 10, step length is 2
   # out: 11 31 51 71 91 
   ```
+
 - `test` or `[]`:  
   ```bash
   meow@MyPC:~$ if [ "hello" = "world" ]; then echo "equal"; else echo "not equal"; fi
@@ -155,8 +172,10 @@ meow@MyPC:/bin$
   if test "hello" = "world"; then echo "equal"; else echo "not equal"; fi
   not equal
   ```
+
 - Sleep:  
   e.g. `sleep 10`
+
 - You can store commands in a `*.sh` file.
   [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=4119)  
   If a line starts with `#!/FILE` (called **shebang** line), it means: give the contents of this program to that `FILE`.
@@ -195,21 +214,25 @@ meow@MyPC:/bin$
 
 ## Tips
 - `Tab`: autocomplete
+  
 - double press `Tab`: all possible options  
   ```bash
   meow@MyPC:/$ cd b # double press Tab
   bin/               boot/
   ```
+
 - `^C` (`Ctrl` + `C`): can not only kill the program, but also clear the command line you are typing
   ```bash
   meow@MyPC:/$ cd hkaskhjakvbcxjz^C
   meow@MyPC:/$
   ```
+
 - `which`: find program in `$PATH` environment variable  
   ```bash
   meow@MyPC:~$ which which
   /usr/bin/which
   ```
+  
 - `echo $PATH`: print the directories stored in the `$PATH` environment variable (separated by colons)  
   ```bash
   meow@MyPC:/$ echo $PATH
@@ -249,7 +272,7 @@ meow@MyPC:/bin$
 [![][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=3228)
 
 ## In the end 
-Please read notes for more information. [![][MS_ICON_SMALL]](https://missing.csail.mit.edu/2026/course-shell/)  
+Please read notes for more information. [![][MS_ICON]](https://missing.csail.mit.edu/2026/course-shell/)  
   #### Things not covered in video:   
   - `set`
   - Exercises
@@ -258,5 +281,5 @@ Please read notes for more information. [![][MS_ICON_SMALL]](https://missing.csa
 
 [YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
 
-[MS_ICON_SMALL]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
-[MS_ICON_MIDDLE]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
+[MS_ICON]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
+[MS_ICON_M]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
