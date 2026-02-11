@@ -14,7 +14,7 @@ Part VI: [Terminal Emulators](#terminal-emulators)
 Appendix: [Tips](#tips)
 
 
-# The Command Line Interface
+## The Command Line Interface
 We will discuss concepts in this example: 
 ```bash
 #!/usr/bin/env bash
@@ -37,7 +37,7 @@ fi
 - Return codes
 - Signals
 
-## Arguments
+### Arguments
 For example, in command `ls -l FOLDER/`, the program is `ls`, and its arguments are `-l` and `FOLDER/`.  
 
 Most programming languages have a way to get their arguments.  
@@ -54,13 +54,13 @@ Then use the following command below, we can see the arguments:
 meow@MyPC:~$ python arguments.py -abcd xyz
 ['arguments.py', '-abcd', 'xyz']
 ```
-  ### Arguments access
+  #### Arguments access
   `$1`–`$9`: access the first to ninth argument.
   `$0`: access program name (can be regarded as 0th argument).
   `$@`: access the list of all arguments.
   `$#`: retrieve the number of arguments.
 
-  ### Flags
+  #### Flags
   Usually, arguments are mixture of *flags* and regular string. Flags starts with `-` or `--` (how they are identified). They tells the program how to behave.  
 
   By convention, single dash `-` is followed by one letter (`-a`, `-l`, `-h`), double dash is followed by letters (`--all`, `--help`, `--version`)  
@@ -71,7 +71,7 @@ meow@MyPC:~$ python arguments.py -abcd xyz
   
   It depends on the program how to parse and handle these arguments (flags and regular strings). But there are some libraries (e.g. `argparse` in python) to help programmers parse these arguments.   
 
-  ### Multiple arguments with same type
+  #### Multiple arguments with same type
   Usually, CLI programs can accept multiple arguments with same type. 
   If you check `mkdir`'s help page. You'll find `DIRECTORY...`, which means `mkdir` can create multiple at the same time.  
   ```bash
@@ -81,7 +81,7 @@ meow@MyPC:~$ python arguments.py -abcd xyz
 
   Instead of using `mkdir src` followed by `mkdir bin`, you can use `mkdir src bin` to create two folders directly.  
 
-  ### Multiple arguments + golbbing
+  #### Multiple arguments + golbbing
   This feature makes it powerful when combining with globbing. 
 
   For example, `touch test/{a,b,c}.py` is equivalent to `touch test/a.py test/b.py test/c.py`; and `ls {.,/}` is equivalent to `ls . /` (list all files in home`~` and root`/`); similarly, `ls /lib*` is equivalent to `ls /lib /lib32 /lib64 /lib.usr-is-merged /libx32`   
@@ -94,14 +94,14 @@ meow@MyPC:~$ python arguments.py -abcd xyz
   - `?`: matches exactly one character of anything. (e.g. `file?.txt` matches `file1.txt` and `file_.txt`. But it doesn't match `file.txt` or `file12.txt`)
   - `{}`: expand a comma-separated list of patterns into multiple arguments
 
-## Streams
+### Streams
 When we are using pipeline like 
 `cat numbers.txt | grep -P '^\d$' | sort | uniq -c`  
 
 We are **NOT** running those programs one by one. But we are running all of them at the same time. We just connect the standard output of previous command to the standard input of the next command. So, when a former program hasn't give an output, the programs behind it will wait for it.  
 Here is a good example [![][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).  
 
-  ### Standard input and output  
+  #### Standard input and output  
   In many programs, `-` is not a flag, it tells the program to read from standard input. For example: `grep "hello" -`. 
 
   Every program has one standard input (stdin) and two types of standard output (**standard output stream (stdout)** and **standard error stream (stderr)**). 
@@ -122,8 +122,8 @@ Here is a good example [![][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).
   ls: cannot access 'nonexistance': No such file or directory
   ```
 
-## Environment variables
-  ### Shell Variables - direct assign
+### Environment variables
+  #### Shell Variables - direct assign
   To assign an environment variable, use `foo=bar`. To access that variable, use `echo $foo`.  
   For example: 
   ```bash
@@ -157,7 +157,7 @@ Here is a good example [![][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).
   Fri Feb  6 05:49:40 PM JST 2026
   ```  
 
-  ### Environment variables - export
+  #### Environment variables - export
   Another way is to use `export`. `export DEBUG=1` will make sure the current shell and its child processes can see the change.  
   ```bash
   meow@MyPC:~$ export foo=bar
@@ -199,18 +199,18 @@ Here is a good example [![][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).
   - However, in single-quote cases, *single quotes (`'`) preserves the literal value of each character within the quotes*. So parent shell will pass `'foo=baz; echo $foo'` to its child shell. So, what the child shell see is `foo=baz; echo $foo`. 
   
 
-  ### Permanent environment variables - write in shell config file  
+  #### Permanent environment variables - write in shell config file  
   The only way to set permanent environment variables is to write `export foo=bar` in **shell configuration file** (`~/.bashrc`, `~/.zshrc`, ...)  
 
   So, in my understanding, there is no actual "permanent" environment variable in Linux (except for those in `/etc/environment`). It seem permanent because we assign a value to it (with `~/.bashrc` or other scripts) when we create a new session.
 
-  ### Remove a shell/environment variable
+  #### Remove a shell/environment variable
   Use `unset foo`.  
 
-## Return codes
+### Return codes
 Use `echo $?` to check the return code of previous command.
 
-## Signals
+### Signals
 - When we press `Ctrl-C`, it shell will deliver a `SIGINT` (signal #2, means "interrupt") to the current process. Each program can define how to handle signals (in most cases).  
 For example: 
   ```python
@@ -253,44 +253,44 @@ Commonly used signals (summarized by Gemini, converted on [tabletomarkdown](http
 
 Manual of all standard signals [![][GNU_ICON]](https://sourceware.org/glibc/manual/latest/html_node/Standard-Signals.html).
 
-# Remote Machines
+## Remote Machines
 `ssh`: secure shell.  
 
 You can use `ssh user@host` to login. If it's the first time to login, you will be asked to type in a password to identify yourself.  
 
 After logging in, you will notice that the prompt shows that you are using the remote machine.  
 
-## SSH keys
+### SSH keys
 With SSH key, you don't need to type in password every time. For example, my private key is stored in `~/.ssh/id_ed25519`. And my public key is stored in `~/.ssh/id_ed25519.pub`.   
 
 You can paste your **public key** to GitHub or remote machine to let it know how you are. But you should <span style="color:#ef6f6f">**NEVER** paste your **private key** to anywhere</span>.  
 
 If you don't want to type in password again, you can manually send your public key to the remote machine (e.g. via `ssh-copy-id user@host`). The remote machine will add your public key to its library (`~/.ssh/authorized_keys`). So, next time you tries to login, if your public key matches any one in `authorized_keys`, the remote machine will let you login directly without password.  
 
-## SSH matching
+### SSH matching
 Please note that your public key is 'public', anyone can get it. But only you know your private key.
 
 So the matching process mentioned above is not as simple as just check if it exists in the file `authorized_keys`. Searching in `authorized_keys` is the first step. If exists, remote machine will send a message encrypted with **public key**, which can be decrypted with your **private key**. So local machine will decrypt and send it back, if it the remote machine verifies the correctness of message, matching succeeds.
 
-  ### Generating a SSH key
+  #### Generating a SSH key
   Here is an example of generating a SSH key: `ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519`.  
   - `ssh-keygen`: The program for generating SSH keys.
   - `-a 100`: Run hashing function 100 to generate the key.  
   - `-t ed25519`: Specifies the algorithm. *Ed25519* is currently the most recommended algorithm for SSH keys.  
   - `-f ~/.ssh/id_ed25519`: Specifies the filename and location where the key will be saved.
 
-## SSH execute
+### SSH execute
 Use `ssh user@host command`, the remote will run the `command` (e.g. `ls`) and print the output to your screen, then goes back to the local machine, please notice the change (no change) of prompt.  
 e.g. `ssh user@host ls | wc -l`: runs `ls` on **remote machine** and `wc` will count the number of lines on **local machine**.  
 
 If we wish to run both commands on remote machine, warp them with single quotes—`ssh user@host 'ls | wc -l'`
 
-## Copy files
+### Copy files
 `scp`: secure copy (using SSH under the hood).  
 e.g. `scp test.py user@host:/home/`  
 `rsync`: a better implementation of `scp`
 
-# Terminal Multiplexers
+## Terminal Multiplexers
 `tmux`: Run multiple processes in the same environment.  
 
 It uses strange key bindings. 
@@ -304,12 +304,12 @@ It uses strange key bindings.
   - Simpler—Section "Terminal Multiplexers" of Missing Semester. [![][MS_ICON]](https://missing.csail.mit.edu/2026/command-line-environment/)
 
 
-  ### Tmux and remote machine
+  #### Tmux and remote machine
   Usually, when we disconnect the remote server, it will kill all running processes with signal `SIGHUP`.  
 
   But if the processes are running in `tmux` on remote machine, it will continue running when we disconnect the remote machine. And it can be brought back easily with `tmux attach`.
 
-# Customizing the shell
+## Customizing the shell
 You can customize the shell by editing the shell configuration file (for bash it's `~/.bashrc`). 
 
 Configuration files of other programs
@@ -323,15 +323,15 @@ You can read others' dotfile for more information. For example, this one [![][Gi
 
 And it's a great practice to place your configuration file on GitHub so that you can sync them on different machines.
   
-  ## Reload modified configuration 
+  ### Reload modified configuration 
   `source ~/.bashrc`: Run the bash configuration file immediately.  
   
-  ## Frameworks and plugins
+  ### Frameworks and plugins
   There are a lot of useful plugins available. Like [powerlevel10k](https://github.com/romkatv/powerlevel10k) (a zsh theme including many useful functions), [starship](https://github.com/starship/starship), etc..
   
   But please note that installing too many plugins will make your shell run slowly. So, please install them one by one and remove those you don't need.  
 
-# AI in the Shell
+## AI in the Shell
 You can use AI tools to give you the correct program with flags to do the job you tell it.  
 For example:  
 ```bash
@@ -357,10 +357,10 @@ sarah.connor
 ```
 All examples in this section are from the official notes. [![][MS_ICON]](https://missing.csail.mit.edu/2026/command-line-environment/) 
 
-  ## Claude Code
+  ### Claude Code
   Claude code is useful, try it.
 
-# Terminal Emulators
+## Terminal Emulators
 *A terminal emulator is a GUI program that provides the text-based interface where your shell runs.* 
 
 *Some of the aspects that you may want to modify in your terminal include:*
@@ -372,7 +372,7 @@ All examples in this section are from the official notes. [![][MS_ICON]](https:/
 - *Scrollback configuration*
 - *Performance (some newer terminals like [Alacritty](https://github.com/alacritty/alacritty) or [Ghostty](https://ghostty.org/) offer GPU acceleration).*
 
-# Tips
+## Tips
 - `ps`: information about running processes  
   
 - Short-circuiting operators: `&&`—The right program will run only if the left one runs successfully. `||`—The right program will run only if the left one fails.  
@@ -426,9 +426,9 @@ All examples in this section are from the official notes. [![][MS_ICON]](https:/
 
 - The programs' name while installing and running might be different. You can search for running command in [this website](https://command-not-found.com/). It also tells you how to install those programs.
 
-# In the end 
+## In the end 
 Please read notes for more information. [![][MS_ICON]](https://missing.csail.mit.edu/2026/course-shell/)  
-  ## Things not covered in video:
+  ### Things not covered in video:
   - Process substitution, `<( CMD )`. *This is useful when commands expect values to be passed by file instead of by STDIN*
   - suffix `&`: run in background (e.g. `sleep 60 &`).  
   - `nohup`: tell the program to ignore `SIGHUP`.  
