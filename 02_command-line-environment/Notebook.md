@@ -1,4 +1,5 @@
-# Lecture 2: Command-line Environment
+# Lecture 2: Command-line Environment [![][MS_ICON_M]](https://missing.csail.mit.edu/2026/command-line-environment/)
+
 Part I: [The Command Line Interface](#the-command-line-interface)  
 
 Part II: [Remote Machines](#remote-machines)  
@@ -479,3 +480,4 @@ Please read notes for more information. [![][MS_ICON]](https://missing.csail.mit
 [YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
 [GitHub]: https://img.shields.io/badge/-dotfiles-white?style=flat&logo=github&logoColor=181717
 [MS_ICON]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
+[MS_ICON_M]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
