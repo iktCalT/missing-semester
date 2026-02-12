@@ -190,6 +190,14 @@ Will be covered in [Lecture 7: Agentic coding](https://missing.csail.mit.edu/202
 
 ## Extensions and other IDE functionality
 
+There are a lot of awesome VS Code extensions making your life easier.
+
+There are 3 types of extensions which are useful for your future career. The follow part is copied from official notes.
+
+- *Development containers: supported by popular IDEs (e.g., supported by VS Code), dev containers let you use a container to run development tools.* **Lecture 6: Packaging and Shipping Code** [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/shipping-code/) will cover more about this topic.
+- *Remote development: do development on a remote machine using SSH (e.g., with the Remote SSH plugin for VS Code).*
+- *Collaborative editing: edit the same file, Google Docs style (e.g., with the Live Share plugin for VS Code).*
+
 [YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
 
 [NVIM_ICON]: https://img.shields.io/badge/Neovim-%57A143.svg?style=flat&logo=neovim&logoColor=white
