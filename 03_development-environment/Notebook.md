@@ -148,6 +148,11 @@ Use `vimtutor` or play [vim adventures](https://vim-adventures.com/) to improve 
 
 ## Code intelligence and language servers
 
+Language-specific support in an IDE is achieved by communicating with language server (who provide language-specific support) through Language Server Protocol (LSP).
+
+*By installing the extension and language server for the languages you work with, you can enable many language-specific features in your IDE, such as:*  
+![Language-specific support](./static/language-specific-support.png)
+
 ## AI-powered development
 
 ## Extensions and other IDE functionality
