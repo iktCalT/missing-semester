@@ -1,4 +1,6 @@
-settings.json
-.markdownlint.json
 fizzbuzz.py
 test.md
+
+# Configuration files
+.markdownlint.json
+.vscode
