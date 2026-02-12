@@ -155,7 +155,42 @@ Language-specific support in an IDE is achieved by communicating with language s
 
 ## AI-powered development
 
+There are 3 main ways for people to use AI tools helping them write codes.
+
+- [Autocomplete](#autocomplete)
+- [Inline chat](#inline-chat)
+- [Coding agents](#coding-agents)
+
+Privacy issues: ummm.... [![47:16][YT_ICON]](https://youtu.be/QnM1nVzrkx8?t=2836)
+
+These tools are continuously evolving. So, please pay attention to that.
+
+### Autocomplete
+
+You can passively accept AI's suggestions or steer it by writing comments.
+
+Autocomplete has limited scope.
+
+In VS Code, press `Tab` to accept AI's suggestions.
+
+### Inline chat
+
+In VS Code, you can select the text first and then press `Ctrl-i` to trigger AI in inline-chat mode.
+
+Inline chat can only modify selected section.
+
+### Coding agents
+
+Will be covered in [Lecture 7: Agentic coding](https://missing.csail.mit.edu/2026/agentic-coding/).
+
+### Recommended software
+
+- GitHub Copilot in VS Code (free for students and teachers)
+- Cursor (a VS Code fork)
+
 ## Extensions and other IDE functionality
+
+[YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
 
 [NVIM_ICON]: https://img.shields.io/badge/Neovim-%57A143.svg?style=flat&logo=neovim&logoColor=white
 
