@@ -1,12 +1,14 @@
 # Lecture 3: Development Environment and Tools [![Missing_Semester][MS_ICON_M]](https://missing.csail.mit.edu/2026/development-environment/)
 
-*Development environment is a set of tools for developing software.*
+*A development environment is a set of tools for developing software. At the heart of a development environment is text editing functionality, along with accompanying features such as syntax highlighting, type checking, code formatting, and autocomplete.*
 
 You can classify development environments into **terminal-based** and **integrated** (IDE). "integrated" means "everything in one place".  
 
-VS Code is an IDE. Cursor and Kiro are forks of VS Code.
+For example, VS Code and Cursor are **IDEs** (Cursor is a fork of VS Code).
 
-Vim (text-editor) is a part of terminal-based development workflows. To develop in terminal, we usually need a terminal multiplexer (e.g. `tmux`), a text editor (e.g. `vim`), a shell (e.g. `bash`), and several language-specific command-line tools.
+While Vim (a text editor) is a part of **terminal-based** development workflows. To develop in terminal, we usually need a terminal multiplexer (e.g. `tmux`), a text editor (e.g. `vim`), a shell (e.g. `bash`), and several language-specific command-line tools.
+
+Although (graphical) IDEs are easier to learn and more extensible, we still need to learn terminal-based workflows. Because some environment doesn't support GUI or doesn't allow you to install software.  
 
 ---
 
@@ -37,11 +39,12 @@ Cheat sheet: [Vim cheat sheet](https://vim.rtorr.com/)
 
 - `j` / `k`: move cursor down / up.  
   `10j`: move the cursor down by 10 lines.
-- `f`: find one character on the current line (`/`: search regex).  
-  `f]`: find next `]` -> press `%`: jump to the matching `[`.
 - `ci`: change inside.  
   `ci(`: change text in next `()`.  
   `ci[`: change text in next `[]`.
+- `f`: find one character forward on the current line (`/`: search regex).  
+  Then you can use `;` / `,` to navigate matches. Or you can use `%` to find the matching character.  
+  e.g. `f]`: find next `]` -> press `%`: jump to the matching `[`.
 
 ### Model editing
 
@@ -53,7 +56,7 @@ You can switch between different modes.
 - `R`: Replace mode
 - `v`: Visual plain mode
 - `V`: Visual line mode
-- `Ctrl v` or `Ctrl-q`: Visual block mode
+- `Ctrl-v` or `Ctrl-q`: Visual block mode
 - `:`: Command-line mode
 
 #### In any other mode
@@ -71,17 +74,21 @@ We will focus on **Normal mode** in this section.
   `b`: move to the beginning of the current / last word.
   `e`: move to the end of the word current / next word.
 - `0`: go to the beginning of the line.  
-  `$`: go to the end of the line.
+  `$`: go to the end of the line.  
+  `^`: go to the first non-blank character of the line.
 - `H`, `M`, `L`: go to the top (head), middle, bottom (last) of screen.
 - `Ctrl-d` / `Ctrl-u`: scroll down / up.
 - `gg` / `G`: go to the beginning / end of the file.
-- [In command mode] `:123`: go to the 123rd line.
+- **[In command mode]** `:123`: go to the 123rd line.  
+  Or, **[in normal mode]** `123G`: go to the 123rd line.
 - `%`: find the matching item (like braces).
-- `f{char}`: find a character forward on the current line.  
-  `t{char}`: find a character backward on the current line.  
-  `;` / `,`: move to next / last result.
+- `f` / `t`: find one character forward on the current line (`/`: search regex).  
+  `F` / `T`: find one character backward on the current line.  
+  After that, use `;` / `,` to move to next / previous result.
 - `\{regex}`: search in the file.  
-  Press `Enter` to confirm. Then press `n` or `N` to go to the next or previous result.
+  `?{regex}`: search in the file (backward).  
+  Press `Enter` to confirm. Then press `n` or `N` to go to the next or previous result.  
+  Then you can use `Ctrl-o` to go to where your were. Or `Ctrl-i` to go forward.
 
 #### Selection
 
@@ -93,21 +100,40 @@ Move in Visual mode to select.
   
 In windows terminal, `Ctrl-v` might not trigger Visual Block mode. Because windows may replace `Ctrl-v` with paste for you.
 
+##### In visual mode, you can
+
+- You can use search (`/regex` or `?regex`) in visual mode to make it more efficient.
+
+- You can use save (`:w filename`) to save the selected text.
+
+- You can press `x` or `d` to delete. Press `c` or `s` to substitute.
+
 #### Edits
 
 In Normal mode:
 
 - `i`: enter Insert mode.
+- `a`: append after the cursor.  
+  `A`: append at the end of the line.  
+  `i`, `a`, `A` all go to Insert mod.
 - `o` / `O`: create a new line below / above and then enter Insert mode.
-- `c{movement}`: change.
-- `d{movement}`: delete.
+- `c{movement}`: change (delete and enter insert mode).  
+  `cc`: change the whole line (delete current line and enter insert mode).
+- `d{movement}`: delete.  
+  `dd`: delete current line.
 - `x`: delete character (equivalent to `dl`).
 - `s`: substitute character (=`cl`).
 - Select text in Visual mode, then press `d` or `c` to delete or modify.
-- **`u`: undo.**
+- **`u`: undo.**  
+  `U`: restore last changed line. You can undo (`u`) a `U`.
 - **`y`: copy ("yank").**
 - **`p`: paste.**
-
+- Substitute in command mode:  
+  `:s/{old}/{new}`: replace the **first** `{old}` to `{new}` in the **current line**. e.g. `:s/thee/the`: change the first `thee` to `the` in current line.  
+  `:s/{old}/{new}/g`: replace the **first** `{old}` with `{new}` in the **current line**.  
+  `:{start},{end}s/{old}/{new}/g`: substitute between `{start}` and `{end}`. Where `{start}` and `{end}` are line numbers.  
+  `:%s/{old}/{new}gc`: change in the whole file with prompt whether to replace or not.  
+  `s` means substitute; `g` means globally; `{start},{end}` or `%` are the range (`%` represents the whole file); `c` means with prompt.
 There are many other to learn.
 
 #### Counts
@@ -123,7 +149,31 @@ You can combine nouns (movements) and verbs (edits) with a count.
 - `i`: inside / inner
 - `a`: around
 
-For example: *`ci(`: change the contents inside the current pair of parentheses; `ci[`: change the contents inside the current pair of square brackets; `da'`: delete a single-quoted string, including the surrounding single quotes*
+For example: *`ci(`: change the contents inside the current pair of parentheses; `ci[`: change the contents inside the current pair of square brackets; `da'`: delete a single-quoted string, including the surrounding single quotes.*
+
+`ciw`: change entire word (change contents inside a word).
+
+#### Others
+
+- `:q!`, `ZQ`: quit without saving.
+- `:wq`, `:x`, `ZZ`: write (save) and quit.
+- `:w`: just write (save) current changes. `:w filename`: save as filename. e.g. `:w test.txt` or `:w ~/test.txt`
+- `Ctrl-g`: show your location in the file and file status.
+- `!{command}`: execute command in shell. e.g. `!ls`.
+- `:r filename`: retrieve a file (get and paste its contents after cursor).  
+  `:r !command`: paste the output of command. e.g. `:r !ls`
+- `:set setting` / `:set nosetting`: enable / disable some settings. (Search vim configuration for more information)  
+  `:set number`: show line number. `:set nonumber`: disable `:set number`.  
+  `:set ic`: ignore upper/lower case while searching. `:set noic`: disable `:set ic`.  
+  `:set hls` or `:set hlsearch`: highlight searching results.  
+  `:set is` or `:set incsearch`: highlight matching result while typing in.
+- `:help` or `:help {something}`: to open help window.  
+  `{something}` are something like `w`, `c_CTRL-D`, `insert-index`, `user-manual`.  
+- If you have multiple windows.  
+  Use `Ctrl-w Ctrl-w` to switch between windows. (Yes! type `Ctrl-w` twice.)  
+  Uee `:q` to quit unnecessary windows.
+- In command mode, you can use `Ctrl-D` to list all possible commands. And use `Tab` to complete.
+- To configure your vim—edit `~/.vimrc`.
 
 #### Practice
 
@@ -144,7 +194,7 @@ def main():
     fizz_buzz(20)
 ```
 
-Use `vimtutor` or play [vim adventures](https://vim-adventures.com/) to improve your vim skills.
+Use `vimtutor` or play [vim adventures](https://vim-adventures.com/) (NOT free) to improve your vim skills.
 
 ## Code intelligence and language servers
 
