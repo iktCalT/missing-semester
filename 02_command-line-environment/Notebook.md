@@ -1,4 +1,4 @@
-# Lecture 2: Command-line Environment [![missing semester][MS_ICON_M]](https://missing.csail.mit.edu/2026/command-line-environment/)
+# Lecture 2: Command-line Environment [![missing semester][ms32]](https://missing.csail.mit.edu/2026/command-line-environment/)
 
 Part I: [The Command Line Interface](#the-command-line-interface)  
 
@@ -112,7 +112,7 @@ Globbing:
 When we are using pipeline like
 `cat numbers.txt | grep -P '^\d$' | sort | uniq -c`  
 
-We are **NOT** running those programs one by one. But we are running all of them at the same time. We just connect the standard output of previous command to the standard input of the next command. So, when a former program hasn't give an output, the programs behind it will wait for it. Here is a good example [![YouTube][YT_ICON]](https://youtu.be/ccBGsPedE9Q?t=683).  
+We are **NOT** running those programs one by one. But we are running all of them at the same time. We just connect the standard output of previous command to the standard input of the next command. So, when a former program hasn't give an output, the programs behind it will wait for it. Here is a good example [![YouTube][yt]](https://youtu.be/ccBGsPedE9Q?t=683).  
 
 #### Standard input and output  
 
@@ -221,7 +221,7 @@ meow@MyPC:~$ bash -c "foo=baz; echo $foo"  # if we use double quotes, it will pr
 bar
 ```
 
-Why is that? I checked the differences between single and double quotes [![GNU document][GNU_ICON]](https://www.gnu.org/software/bash/manual/bash.html#Quoting).
+Why is that? I checked the differences between single and double quotes [![GNU document][gnu]](https://www.gnu.org/software/bash/manual/bash.html#Quoting).
 
 - In double-quote cases, parent shell will replace `$foo` with the `$foo` in itself (which is `bar`) before `"foo=baz; echo $foo"` is transferred to the child shell. So, what the child shell see is `foo=baz; echo bar`. Because *The characters `$` and `` ` `` retain their special meaning within double quotes*.
 
@@ -286,7 +286,7 @@ Commonly used signals (summarized by Gemini, converted on [tabletomarkdown](http
   | **18** | **SIGCONT** | **Resume** | **Continue:** Tells a process previously stopped by SIGSTOP/SIGTSTP to resume execution in the background. |
   | **19/20** | **SIGSTOP/TSTP** | Stop (Pause) | **Stop:** Pauses the process. SIGTSTP is sent by `Ctrl+Z`; SIGSTOP is a forced pause that cannot be ignored. |
 
-Manual of all standard signals [![GNU document][GNU_ICON]](https://sourceware.org/glibc/manual/latest/html_node/Standard-Signals.html).
+Manual of all standard signals [![GNU document][gnu]](https://sourceware.org/glibc/manual/latest/html_node/Standard-Signals.html).
 
 ## Remote Machines
 
@@ -346,7 +346,7 @@ It uses strange key bindings.
 - More `tmux` instructions.  
   - Easier—A Quick and Easy Guide to tmux <a href="https://hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/"><img alt="hamvocke.com" src="https://hamvocke.com/img/beerpig.svg" style="height:16px"></a>.  
   - Detailed—Terminal Multiplexers <a href="https://linuxcommand.org/lc3_adv_termmux.php"><img alt="linuxcommand.org" src="https://linuxcommand.org/favicon.png" style="height:16px"></a>.  
-  - Simpler—Section "Terminal Multiplexers" of Missing Semester. [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/command-line-environment/)
+  - Simpler—Section "Terminal Multiplexers" of Missing Semester. [![missing semester][ms16]](https://missing.csail.mit.edu/2026/command-line-environment/)
 
 ### Tmux and remote machine
 
@@ -366,7 +366,7 @@ Configuration files of other programs
 - ssh - ~/.ssh/config
 - tmux - ~/.tmux.conf
   
-You can read others' dotfile for more information. For example, this one [![github repository][GitHub]](https://github.com/mathiasbynens/dotfiles) (although it's designed for macOS, there are a lot of useful instructions in this repository).  
+You can read others' dotfile for more information. For example, this one [![github repository][github]](https://github.com/mathiasbynens/dotfiles) (although it's designed for macOS, there are a lot of useful instructions in this repository).  
 
 And it's a great practice to place your configuration file on GitHub so that you can sync them on different machines.
   
@@ -408,7 +408,7 @@ mike_wilson
 sarah.connor
 ```
 
-All examples in this section are from the official notes. [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/command-line-environment/)
+All examples in this section are from the official notes. [![missing semester][ms16]](https://missing.csail.mit.edu/2026/command-line-environment/)
 
 ### Claude Code
 
@@ -489,7 +489,7 @@ Claude code is useful, try it.
 
 ## In the end
 
-Please read notes for more information. [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/course-shell/)  
+Please read notes for more information. [![missing semester][ms16]](https://missing.csail.mit.edu/2026/course-shell/)  
 
 ### Things not covered in video:
 
@@ -552,8 +552,8 @@ For example:
 
 - `fzf`: fuzzy finder. I use `atuin`.
 
-[GNU_ICON]: https://img.shields.io/badge/-GNU-white?style=flat&logo=gnu&logoColor=black
-[YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
-[GitHub]: https://img.shields.io/badge/-dotfiles-white?style=flat&logo=github&logoColor=181717
-[MS_ICON]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
-[MS_ICON_M]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
+[gnu]: https://img.shields.io/badge/-GNU-white?style=flat&logo=gnu&logoColor=black
+[yt]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
+[github]: https://img.shields.io/badge/-dotfiles-white?style=flat&logo=github&logoColor=181717
+[ms16]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
+[ms32]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png

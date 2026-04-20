@@ -1,4 +1,4 @@
-# Lecture 1: Course Overview + Introduction to the Shell [![missing semester][MS_ICON_M]](https://missing.csail.mit.edu/2026/course-shell/)
+# Lecture 1: Course Overview + Introduction to the Shell [![missing semester][ms32]](https://missing.csail.mit.edu/2026/course-shell/)
 
 ## Introduction to shell
 
@@ -110,7 +110,7 @@ meow@MyPC:/bin$
 - `cat`: print out the contents of a file.  
   e.g. `meow@MyPC:~$ cat ~/.bashrc`  
 
-- `sort`, `uniq`, `head`, `tail`: read files in specific behavior. [![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2012)
+- `sort`, `uniq`, `head`, `tail`: read files in specific behavior. [![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=2012)
   
   **Useful combinations:**  
 
@@ -122,7 +122,7 @@ meow@MyPC:/bin$
   `grep -r PATTERNS [FILE]`: `[FILE]` here is a folder. Find lines in all files under that folder ([FILE]) recursively.  
   `grep` is very powerful because it supports **REGULAR EXPRESSION (regex)**.
 
-- `sed`: is used to modify files. [![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2264)
+- `sed`: is used to modify files. [![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=2264)
   
 - `find`: used to find file.  
   
@@ -131,7 +131,7 @@ meow@MyPC:/bin$
   /home/meow/Downloads/datalab-handout.tar
   ```
 
-  There are a lot of arguments can be passed to `find` (check `man find` or ask LLMs). A more complicated example (at [![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2751))  
+  There are a lot of arguments can be passed to `find` (check `man find` or ask LLMs). A more complicated example (at [![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=2751))  
   
   ```bash
   meow@MyPC:~$ find ~/Downloads -type f -size -10M -exec cp {} {} \;
@@ -205,7 +205,7 @@ meow@MyPC:/bin$
   e.g. `sleep 10`
 
 - You can store commands in a `*.sh` file.
-  [![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=4119)  
+  [![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=4119)  
   If a line starts with `#!/FILE` (called **shebang** line), it means: give the contents of this program to that `FILE`.
 
   For example, if `lecture.sh` has a line `#!/bin/sh`, then `./lecture.sh` is equivalent to `/bin/sh lecture.sh`. So that bash (`/bin/sh`) can run the scripts in `lecture.sh`.  
@@ -298,25 +298,25 @@ meow@MyPC:/bin$
   /bin/python3
   ```
 
-- Like Regex, **Glob** (short for global) is another way for pattern matching. For instance, in `ls *.txt`, `*.txt` is glob expression (it uses `*`, `?`, `[]`, `{}`). [![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=2386)  
+- Like Regex, **Glob** (short for global) is another way for pattern matching. For instance, in `ls *.txt`, `*.txt` is glob expression (it uses `*`, `?`, `[]`, `{}`). [![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=2386)  
   
   Glob is also called Wildcards. Usually, paths are matched by glob, while text or string are matched by regex  
 
 ## An interesting example
 
 ![lecture demo](./static/example_combining_commands.png)
-[![YouTube][YT_ICON]](https://youtu.be/MSgoeuMqUmU?t=3228)
+[![YouTube][yt]](https://youtu.be/MSgoeuMqUmU?t=3228)
 
 ## In the end
 
-Please read notes for more information. [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/course-shell/)  
+Please read notes for more information. [![missing semester][ms16]](https://missing.csail.mit.edu/2026/course-shell/)  
 
 ### Things not covered in video:  
 
 - `set`
 - Exercises
 
-[YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
+[yt]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
 
-[MS_ICON]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
-[MS_ICON_M]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
+[ms16]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
+[ms32]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
