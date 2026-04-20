@@ -1,4 +1,4 @@
-# Lecture 3: Development Environment and Tools [![Missing_Semester][MS_ICON_M]](https://missing.csail.mit.edu/2026/development-environment/)
+# Lecture 3: Development Environment and Tools [![Missing_Semester][ms32]](https://missing.csail.mit.edu/2026/development-environment/)
 
 *A development environment is a set of tools for developing software. At the heart of a development environment is text editing functionality, along with accompanying features such as syntax highlighting, type checking, code formatting, and autocomplete.*
 
@@ -34,7 +34,7 @@ Some features are supported only by Neovim but Vim. And Neovim even support mous
 
 Here are some examples of vim key bindings (only a tiny part). Just to illustrate how differently vim behaves compared to text editors like MS Word.
 
-Please check [![missing_semester][MS_ICON]](https://missing.csail.mit.edu/2026/development-environment/#modal-editing) and [![nvim][NVIM_ICON]](https://neovim.io/doc/user/) for more vim instruction.  
+Please check [![missing_semester][ms16]](https://missing.csail.mit.edu/2026/development-environment/#modal-editing) and [![nvim][nvim]](https://neovim.io/doc/user/) for more vim instruction.  
 Cheat sheet: [Vim cheat sheet](https://vim.rtorr.com/)
 
 - `j` / `k`: move cursor down / up.  
@@ -211,7 +211,7 @@ There are 3 main ways for people to use AI tools helping them write codes.
 - [Inline chat](#inline-chat)
 - [Coding agents](#coding-agents)
 
-Privacy issues: ummm.... [![47:16][YT_ICON]](https://youtu.be/QnM1nVzrkx8?t=2836)
+Privacy issues: ummm.... [![47:16][yt]](https://youtu.be/QnM1nVzrkx8?t=2836)
 
 These tools are continuously evolving. So, please pay attention to that.
 
@@ -244,14 +244,11 @@ There are a lot of awesome VS Code extensions making your life easier.
 
 There are 3 types of extensions which are useful for your future career. The follow part is copied from official notes.
 
-- *Development containers: supported by popular IDEs (e.g., supported by VS Code), dev containers let you use a container to run development tools.* **Lecture 6: Packaging and Shipping Code** [![missing semester][MS_ICON]](https://missing.csail.mit.edu/2026/shipping-code/) will cover more about this topic.
+- *Development containers: supported by popular IDEs (e.g., supported by VS Code), dev containers let you use a container to run development tools.* **Lecture 6: Packaging and Shipping Code** [![missing semester][ms16]](https://missing.csail.mit.edu/2026/shipping-code/) will cover more about this topic.
 - *Remote development: do development on a remote machine using SSH (e.g., with the Remote SSH plugin for VS Code).*
 - *Collaborative editing: edit the same file, Google Docs style (e.g., with the Live Share plugin for VS Code).*
 
-[YT_ICON]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
-
-[NVIM_ICON]: https://img.shields.io/badge/Neovim-%57A143.svg?style=flat&logo=neovim&logoColor=white
-
-[MS_ICON]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
-
-[MS_ICON_M]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
+[yt]: https://img.shields.io/badge/YouTube-%23FF0000.svg?style=flat-square&logo=YouTube&logoColor=white
+[nvim]: https://img.shields.io/badge/Neovim-%57A143.svg?style=flat&logo=neovim&logoColor=white
+[ms16]: https://missing.csail.mit.edu/static/assets/favicon-16x16.png
+[ms32]: https://missing.csail.mit.edu/static/assets/favicon-32x32.png
