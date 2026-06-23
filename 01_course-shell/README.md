@@ -311,7 +311,7 @@ meow@MyPC:/bin$
 
 Please read notes for more information. [![missing semester][ms16]](https://missing.csail.mit.edu/2026/course-shell/)  
 
-### Things not covered in video:  
+### Things not covered in video
 
 - `set`
 - Exercises
